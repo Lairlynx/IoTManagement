@@ -13,8 +13,20 @@ public class Device {
     private Long id;
 
     private String name;
-    private String description;
-    private boolean status;
+    private String type;
+    private boolean online;
 
     // Constructors, getters, setters
-}
+
+    //Default constructor
+    public Device() {
+    	
+    }
+
+    //Parameterized constructor
+    public Device(String name, String description, boolean status) {
+    	this.name = name;
+    	this.type = description;
+    	this.online = status;
+    	}
+    }
