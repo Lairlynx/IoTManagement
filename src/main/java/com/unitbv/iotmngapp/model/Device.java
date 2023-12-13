@@ -13,6 +13,8 @@ public class Device {
     private Long id;
 
     private String name;
+    private String description;
+    private boolean status;
 
-    //TODO: other fields, constructors, getters, and setters
+    // Constructors, getters, setters
 }
