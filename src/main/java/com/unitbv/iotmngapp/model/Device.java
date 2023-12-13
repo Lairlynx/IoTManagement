@@ -1,9 +1,11 @@
 package com.unitbv.iotmngapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Device {
@@ -12,21 +14,59 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(max = 255)
     private String name;
-    private String type;
-    private boolean online;
 
-    // Constructors, getters, setters
+    @Size(max = 1000)
+    private String description;
 
-    //Default constructor
+    private boolean status;
+
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL)
+    private List<Sensor> sensors;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime lastModifiedAt;
+
+    // Constructors
     public Device() {
-    	
+        // Default constructor
     }
 
-    //Parameterized constructor
     public Device(String name, String description, boolean status) {
-    	this.name = name;
-    	this.type = description;
-    	this.online = status;
-    	}
+        this.name = name;
+        this.description = description;
+        this.status = status;
     }
+
+    // Getters and setters
+
+    // Additional methods, annotations, and overrides
+
+    // Equals and hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Device device = (Device) o;
+        return Objects.equals(id, device.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    // ToString
+    @Override
+    public String toString() {
+        return "Device{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
+    }
+}
